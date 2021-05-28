@@ -9986,13 +9986,13 @@ int32_t lsm6dso_sh_data_rate_set(stmdev_ctx_t *ctx,
 
   if (ret == 0)
   {
-    ret = lsm6dso_read_reg(ctx, LSM6DSO_SLV1_CONFIG, (uint8_t *)&reg, 1);
+    ret = lsm6dso_read_reg(ctx, LSM6DSO_SLV0_CONFIG, (uint8_t *)&reg, 1);
   }
 
   if (ret == 0)
   {
     reg.shub_odr = (uint8_t)val;
-    ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV1_CONFIG, (uint8_t *)&reg, 1);
+    ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV0_CONFIG, (uint8_t *)&reg, 1);
   }
 
   if (ret == 0)
@@ -10021,7 +10021,7 @@ int32_t lsm6dso_sh_data_rate_get(stmdev_ctx_t *ctx,
 
   if (ret == 0)
   {
-    ret = lsm6dso_read_reg(ctx, LSM6DSO_SLV1_CONFIG, (uint8_t *)&reg, 1);
+    ret = lsm6dso_read_reg(ctx, LSM6DSO_SLV0_CONFIG, (uint8_t *)&reg, 1);
   }
 
   if (ret == 0)
