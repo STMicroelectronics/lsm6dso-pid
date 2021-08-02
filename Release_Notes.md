@@ -38,7 +38,7 @@ This directory contains the LSM6DSO component drivers.
 
 ### First release
 
-- First official release
+- First official release [ref. DS v2.0]
 
 ##
 
