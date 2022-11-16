@@ -1077,7 +1077,7 @@ int32_t lsm6dso_temp_flag_data_ready_get(stmdev_ctx_t *ctx,
 
 /**
   * @brief  Accelerometer X-axis user offset correction expressed in
-  *         two’s complement, weight depends on USR_OFF_W in CTRL6_C (15h).
+  *         two's complement, weight depends on USR_OFF_W in CTRL6_C (15h).
   *         The value must be in the range [-127 127].[set]
   *
   * @param  ctx      read / write interface definitions
@@ -1095,7 +1095,7 @@ int32_t lsm6dso_xl_usr_offset_x_set(stmdev_ctx_t *ctx, uint8_t *buff)
 }
 
 /**
-  * @brief  Accelerometer X-axis user offset correction expressed in two’s
+  * @brief  Accelerometer X-axis user offset correction expressed in two's
   *         complement, weight depends on USR_OFF_W in CTRL6_C (15h).
   *         The value must be in the range [-127 127].[get]
   *
@@ -1114,7 +1114,7 @@ int32_t lsm6dso_xl_usr_offset_x_get(stmdev_ctx_t *ctx, uint8_t *buff)
 }
 
 /**
-  * @brief  Accelerometer Y-axis user offset correction expressed in two’s
+  * @brief  Accelerometer Y-axis user offset correction expressed in two's
   *         complement, weight depends on USR_OFF_W in CTRL6_C (15h).
   *         The value must be in the range [-127 127].[set]
   *
@@ -1133,7 +1133,7 @@ int32_t lsm6dso_xl_usr_offset_y_set(stmdev_ctx_t *ctx, uint8_t *buff)
 }
 
 /**
-  * @brief  Accelerometer Y-axis user offset correction expressed in two’s
+  * @brief  Accelerometer Y-axis user offset correction expressed in two's
   *         complement, weight depends on USR_OFF_W in CTRL6_C (15h).
   *         The value must be in the range [-127 127].[get]
   *
@@ -1152,7 +1152,7 @@ int32_t lsm6dso_xl_usr_offset_y_get(stmdev_ctx_t *ctx, uint8_t *buff)
 }
 
 /**
-  * @brief  Accelerometer Z-axis user offset correction expressed in two’s
+  * @brief  Accelerometer Z-axis user offset correction expressed in two's
   *         complement, weight depends on USR_OFF_W in CTRL6_C (15h).
   *         The value must be in the range [-127 127].[set]
   *
@@ -1171,7 +1171,7 @@ int32_t lsm6dso_xl_usr_offset_z_set(stmdev_ctx_t *ctx, uint8_t *buff)
 }
 
 /**
-  * @brief  Accelerometer Z-axis user offset correction expressed in two’s
+  * @brief  Accelerometer Z-axis user offset correction expressed in two's
   *         complement, weight depends on USR_OFF_W in CTRL6_C (15h).
   *         The value must be in the range [-127 127].[get]
   *
@@ -1304,7 +1304,7 @@ int32_t lsm6dso_timestamp_get(stmdev_ctx_t *ctx, uint8_t *val)
 /**
   * @brief  Timestamp first data output register (r).
   *         The value is expressed as a 32-bit word and the bit
-  *         resolution is 25 μs.[get]
+  *         resolution is 25 us.[get]
   *
   * @param  ctx      read / write interface definitions
   * @param  buff     buffer that stores data read
@@ -1407,7 +1407,7 @@ int32_t lsm6dso_rounding_mode_get(stmdev_ctx_t *ctx,
 
 /**
   * @brief  Temperature data output register (r).
-  *         L and H registers together express a 16-bit word in two’s
+  *         L and H registers together express a 16-bit word in two's
   *         complement.[get]
   *
   * @param  ctx      read / write interface definitions
@@ -1429,7 +1429,7 @@ int32_t lsm6dso_temperature_raw_get(stmdev_ctx_t *ctx, int16_t *val)
 
 /**
   * @brief  Angular rate sensor. The value is expressed as a 16-bit
-  *         word in two’s complement.[get]
+  *         word in two's complement.[get]
   *
   * @param  ctx      read / write interface definitions
   * @param  buff     buffer that stores data read
@@ -1454,7 +1454,7 @@ int32_t lsm6dso_angular_rate_raw_get(stmdev_ctx_t *ctx, int16_t *val)
 
 /**
   * @brief  Linear acceleration output register.
-  *         The value is expressed as a 16-bit word in two’s complement.[get]
+  *         The value is expressed as a 16-bit word in two's complement.[get]
   *
   * @param  ctx      read / write interface definitions
   * @param  buff     buffer that stores data read
@@ -6827,7 +6827,7 @@ int32_t lsm6dso_fifo_cnt_event_batch_get(stmdev_ctx_t *ctx,
 
 /**
   * @brief  Resets the internal counter of batching vents for a single sensor.
-  *         This bit is automatically reset to zero if it was set to ‘1’.[set]
+  *         This bit is automatically reset to zero if it was set to '1'.[set]
   *
   * @param  ctx      read / write interface definitions
   * @param  val      change the values of rst_counter_bdr in
@@ -6854,7 +6854,7 @@ int32_t lsm6dso_rst_batch_counter_set(stmdev_ctx_t *ctx, uint8_t val)
 
 /**
   * @brief  Resets the internal counter of batching events for a single sensor.
-  *         This bit is automatically reset to zero if it was set to ‘1’.[get]
+  *         This bit is automatically reset to zero if it was set to '1'.[get]
   *
   * @param  ctx      read / write interface definitions
   * @param  val      change the values of rst_counter_bdr in

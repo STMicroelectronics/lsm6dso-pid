@@ -50,7 +50,7 @@ extern "C" {
 /** if _BYTE_ORDER is not defined, choose the endianness of your architecture
   * by uncommenting the define which fits your platform endianness
   */
-//#define DRV_BYTE_ORDER    DRV_BIG_ENDIAN
+/* #define DRV_BYTE_ORDER    DRV_BIG_ENDIAN */
 #define DRV_BYTE_ORDER    DRV_LITTLE_ENDIAN
 
 #else /* defined __BYTE_ORDER__ */
@@ -2758,7 +2758,7 @@ float_t lsm6dso_from_lsb_to_nsec(int16_t lsb);
 typedef enum
 {
   LSM6DSO_2g   = 0,
-  LSM6DSO_16g  = 1, /* if XL_FS_MODE = ‘1’ -> LSM6DSO_2g */
+  LSM6DSO_16g  = 1, /* if XL_FS_MODE = '1' -> LSM6DSO_2g */
   LSM6DSO_4g   = 2,
   LSM6DSO_8g   = 3,
 } lsm6dso_fs_xl_t;
@@ -3979,8 +3979,8 @@ typedef enum
   LSM6DSO_SPI_4W      = 0x06, /* Only SPI: SDO / SDI separated pins */
   LSM6DSO_SPI_3W      = 0x07, /* Only SPI: SDO / SDI share the same pin */
   LSM6DSO_I2C         = 0x04, /* Only I2C */
-  LSM6DSO_I3C_T_50us  = 0x02, /* I3C: available time equal to 50 μs */
-  LSM6DSO_I3C_T_2us   = 0x12, /* I3C: available time equal to 2 μs */
+  LSM6DSO_I3C_T_50us  = 0x02, /* I3C: available time equal to 50 us */
+  LSM6DSO_I3C_T_2us   = 0x12, /* I3C: available time equal to 2 us */
   LSM6DSO_I3C_T_1ms   = 0x22, /* I3C: available time equal to 1 ms */
   LSM6DSO_I3C_T_25ms  = 0x32, /* I3C: available time equal to 25 ms */
 } lsm6dso_ui_bus_md_t;
