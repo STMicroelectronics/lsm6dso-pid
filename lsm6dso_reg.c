@@ -7074,6 +7074,10 @@ int32_t lsm6dso_fifo_sensor_tag_get(stmdev_ctx_t *ctx,
       *val = LSM6DSO_TEMPERATURE_TAG;
       break;
 
+    case LSM6DSO_TIMESTAMP_TAG:
+      *val = LSM6DSO_TIMESTAMP_TAG;
+      break;
+
     case LSM6DSO_CFG_CHANGE_TAG:
       *val = LSM6DSO_CFG_CHANGE_TAG;
       break;
@@ -7126,8 +7130,8 @@ int32_t lsm6dso_fifo_sensor_tag_get(stmdev_ctx_t *ctx,
       *val = LSM6DSO_SENSORHUB_SLAVE3_TAG;
       break;
 
-    case LSM6DSO_STEP_CPUNTER_TAG:
-      *val = LSM6DSO_STEP_CPUNTER_TAG;
+    case LSM6DSO_STEP_COUNTER_TAG:
+      *val = LSM6DSO_STEP_COUNTER_TAG;
       break;
 
     case LSM6DSO_GAME_ROTATION_TAG:
