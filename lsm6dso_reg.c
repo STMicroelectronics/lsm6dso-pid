@@ -10923,14 +10923,13 @@ int32_t lsm6dso_interrupt_mode_get(stmdev_ctx_t *ctx,
 
   if (ret == 0)
   {
-    ctrl3_c.h_lactive = val->active_low;
+    val->active_low = ctrl3_c.h_lactive;
     ret = lsm6dso_read_reg(ctx, LSM6DSO_TAP_CFG0, (uint8_t *) &tap_cfg0, 1);
   }
 
   if (ret == 0)
   {
-    tap_cfg0.lir = val->base_latched;
-    tap_cfg0.int_clr_on_read = val->base_latched | val->emb_latched;
+    val->base_latched = (tap_cfg0.lir & tap_cfg0.int_clr_on_read);
     ret = lsm6dso_mem_bank_set(ctx, LSM6DSO_EMBEDDED_FUNC_BANK);
   }
 
@@ -10941,8 +10940,7 @@ int32_t lsm6dso_interrupt_mode_get(stmdev_ctx_t *ctx,
 
   if (ret == 0)
   {
-    page_rw.emb_func_lir = val->emb_latched;
-    ret = lsm6dso_write_reg(ctx, LSM6DSO_PAGE_RW, (uint8_t *) &page_rw, 1);
+    val->emb_latched = (page_rw.emb_func_lir & tap_cfg0.int_clr_on_read);
   }
 
   if (ret == 0)
