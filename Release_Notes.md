@@ -30,7 +30,7 @@ This directory contains the LSM6DSO component drivers.
 # Update history
 
 ::: {.collapse}
-<input type="checkbox" id="collapse-section1" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section1" aria-hidden="true">
 <label for="collapse-section1" aria-hidden="true">V1.0.0 / 18-June-2021</label>
 <div>			
 
@@ -39,6 +39,23 @@ This directory contains the LSM6DSO component drivers.
 ### First release
 
 - First official release [ref. DS v2.0]
+
+##
+
+</div>
+
+<input type="checkbox" id="collapse-section1" checked aria-hidden="true">
+<label for="collapse-section1" aria-hidden="true">V2.0.0 / 19-April-2023</label>
+<div>			
+
+## Main changes
+
+### First release
+
+- Fixed wrong implementation of lsm6dso_interrupt_mode_get.
+- Fix typo in TAG enum, add missing TAG enum (timestamp) in getter
+- Fix mistakes in docs for setters and getters
+- Fixed most mcuastyle errors
 
 ##
 
