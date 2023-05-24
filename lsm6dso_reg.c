@@ -1626,24 +1626,19 @@ int32_t lsm6dso_odr_cal_reg_get(stmdev_ctx_t *ctx, uint8_t *val)
   *         hub configuration registers.[set]
   *
   * @param  ctx      read / write interface definitions
-  * @param  val      change the values of reg_access in
-  *                               reg FUNC_CFG_ACCESS
-  * @retval             interface status (MANDATORY: return 0 -> no Error)
+  * @param  val      change register page (reg_access in FUNC_CFG_ACCESS)
+  * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
 int32_t lsm6dso_mem_bank_set(stmdev_ctx_t *ctx,
                              lsm6dso_reg_access_t val)
 {
-  lsm6dso_func_cfg_access_t reg;
+  lsm6dso_func_cfg_access_t reg = {0};
   int32_t ret;
 
-  ret = lsm6dso_read_reg(ctx, LSM6DSO_FUNC_CFG_ACCESS, (uint8_t *)&reg, 1);
-
-  if (ret == 0)
-  {
-    reg.reg_access = (uint8_t)val;
-    ret = lsm6dso_write_reg(ctx, LSM6DSO_FUNC_CFG_ACCESS, (uint8_t *)&reg, 1);
-  }
+  /*  no need to read it first as the pther bits are reserved and must be zero */
+  reg.reg_access = (uint8_t)val;
+  ret = lsm6dso_write_reg(ctx, LSM6DSO_FUNC_CFG_ACCESS, (uint8_t *)&reg, 1);
 
   return ret;
 }
@@ -1653,9 +1648,8 @@ int32_t lsm6dso_mem_bank_set(stmdev_ctx_t *ctx,
   *         hub configuration registers.[get]
   *
   * @param  ctx      read / write interface definitions
-  * @param  val      Get the values of reg_access in
-  *                               reg FUNC_CFG_ACCESS
-  * @retval             interface status (MANDATORY: return 0 -> no Error)
+  * @param  val      Get the values of reg_access in reg FUNC_CFG_ACCESS
+  * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
 int32_t lsm6dso_mem_bank_get(stmdev_ctx_t *ctx,
