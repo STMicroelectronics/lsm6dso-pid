@@ -10100,7 +10100,7 @@ int32_t lsm6dso_sh_cfg_write(stmdev_ctx_t *ctx,
 }
 
 /**
-  * @brief  Configure slave 0 for perform a read.[set]
+  * @brief  Configure slave idx to perform a read.[set]
   *
   * @param  ctx      read / write interface definitions
   * @param  val      Structure that contain
@@ -10110,7 +10110,7 @@ int32_t lsm6dso_sh_cfg_write(stmdev_ctx_t *ctx,
   * @retval             interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t lsm6dso_sh_slv0_cfg_read(stmdev_ctx_t *ctx,
+int32_t lsm6dso_sh_slv_cfg_read(stmdev_ctx_t *ctx, uint8_t idx,
                                  lsm6dso_sh_cfg_read_t *val)
 {
   lsm6dso_slv0_add_t slv0_add;
@@ -10123,188 +10123,23 @@ int32_t lsm6dso_sh_slv0_cfg_read(stmdev_ctx_t *ctx,
   {
     slv0_add.slave0 = val->slv_add;
     slv0_add.rw_0 = 1;
-    ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV0_ADD, (uint8_t *)&slv0_add, 1);
+    ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV0_ADD + idx*3, (uint8_t *)&slv0_add, 1);
   }
 
   if (ret == 0)
   {
-    ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV0_SUBADD,
-                            &(val->slv_subadd), 1);
+    ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV0_SUBADD + idx*3, &(val->slv_subadd), 1);
   }
 
   if (ret == 0)
   {
-    ret = lsm6dso_read_reg(ctx, LSM6DSO_SLV0_CONFIG,
-                           (uint8_t *)&slv0_config, 1);
+    ret = lsm6dso_read_reg(ctx, LSM6DSO_SLV0_CONFIG + idx*3, (uint8_t *)&slv0_config, 1);
   }
 
   if (ret == 0)
   {
     slv0_config.slave0_numop = val->slv_len;
-    ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV0_CONFIG,
-                            (uint8_t *)&slv0_config, 1);
-  }
-
-  if (ret == 0)
-  {
-    ret = lsm6dso_mem_bank_set(ctx, LSM6DSO_USER_BANK);
-  }
-
-  return ret;
-}
-
-/**
-  * @brief  Configure slave 0 for perform a write/read.[set]
-  *
-  * @param  ctx      read / write interface definitions
-  * @param  val      Structure that contain
-  *                      - uint8_t slv1_add;    8 bit i2c device address
-  *                      - uint8_t slv1_subadd; 8 bit register device address
-  *                      - uint8_t slv1_len;    num of bit to read
-  * @retval             interface status (MANDATORY: return 0 -> no Error)
-  *
-  */
-int32_t lsm6dso_sh_slv1_cfg_read(stmdev_ctx_t *ctx,
-                                 lsm6dso_sh_cfg_read_t *val)
-{
-  lsm6dso_slv1_add_t slv1_add;
-  lsm6dso_slv1_config_t slv1_config;
-  int32_t ret;
-
-  ret = lsm6dso_mem_bank_set(ctx, LSM6DSO_SENSOR_HUB_BANK);
-
-  if (ret == 0)
-  {
-    slv1_add.slave1_add = val->slv_add;
-    slv1_add.r_1 = 1;
-    ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV1_ADD, (uint8_t *)&slv1_add, 1);
-  }
-
-  if (ret == 0)
-  {
-    ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV1_SUBADD,
-                            &(val->slv_subadd), 1);
-  }
-
-  if (ret == 0)
-  {
-    ret = lsm6dso_read_reg(ctx, LSM6DSO_SLV1_CONFIG,
-                           (uint8_t *)&slv1_config, 1);
-  }
-
-  if (ret == 0)
-  {
-    slv1_config.slave1_numop = val->slv_len;
-    ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV1_CONFIG,
-                            (uint8_t *)&slv1_config, 1);
-  }
-
-  if (ret == 0)
-  {
-    ret = lsm6dso_mem_bank_set(ctx, LSM6DSO_USER_BANK);
-  }
-
-  return ret;
-}
-
-/**
-  * @brief  Configure slave 0 for perform a write/read.[set]
-  *
-  * @param  ctx      read / write interface definitions
-  * @param  val      Structure that contain
-  *                      - uint8_t slv2_add;    8 bit i2c device address
-  *                      - uint8_t slv2_subadd; 8 bit register device address
-  *                      - uint8_t slv2_len;    num of bit to read
-  * @retval             interface status (MANDATORY: return 0 -> no Error)
-  *
-  */
-int32_t lsm6dso_sh_slv2_cfg_read(stmdev_ctx_t *ctx,
-                                 lsm6dso_sh_cfg_read_t *val)
-{
-  lsm6dso_slv2_add_t slv2_add;
-  lsm6dso_slv2_config_t slv2_config;
-  int32_t ret;
-
-  ret = lsm6dso_mem_bank_set(ctx, LSM6DSO_SENSOR_HUB_BANK);
-
-  if (ret == 0)
-  {
-    slv2_add.slave2_add = val->slv_add;
-    slv2_add.r_2 = 1;
-    ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV2_ADD, (uint8_t *)&slv2_add, 1);
-  }
-
-  if (ret == 0)
-  {
-    ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV2_SUBADD,
-                            &(val->slv_subadd), 1);
-  }
-
-  if (ret == 0)
-  {
-    ret = lsm6dso_read_reg(ctx, LSM6DSO_SLV2_CONFIG,
-                           (uint8_t *)&slv2_config, 1);
-  }
-
-  if (ret == 0)
-  {
-    slv2_config.slave2_numop = val->slv_len;
-    ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV2_CONFIG,
-                            (uint8_t *)&slv2_config, 1);
-  }
-
-  if (ret == 0)
-  {
-    ret = lsm6dso_mem_bank_set(ctx, LSM6DSO_USER_BANK);
-  }
-
-  return ret;
-}
-
-/**
-  * @brief Configure slave 0 for perform a write/read.[set]
-  *
-  * @param  ctx      read / write interface definitions
-  * @param  val      Structure that contain
-  *                      - uint8_t slv3_add;    8 bit i2c device address
-  *                      - uint8_t slv3_subadd; 8 bit register device address
-  *                      - uint8_t slv3_len;    num of bit to read
-  * @retval             interface status (MANDATORY: return 0 -> no Error)
-  *
-  */
-int32_t lsm6dso_sh_slv3_cfg_read(stmdev_ctx_t *ctx,
-                                 lsm6dso_sh_cfg_read_t *val)
-{
-  lsm6dso_slv3_add_t slv3_add;
-  lsm6dso_slv3_config_t slv3_config;
-  int32_t ret;
-
-  ret = lsm6dso_mem_bank_set(ctx, LSM6DSO_SENSOR_HUB_BANK);
-
-  if (ret == 0)
-  {
-    slv3_add.slave3_add = val->slv_add;
-    slv3_add.r_3 = 1;
-    ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV3_ADD, (uint8_t *)&slv3_add, 1);
-  }
-
-  if (ret == 0)
-  {
-    ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV3_SUBADD,
-                            &(val->slv_subadd), 1);
-  }
-
-  if (ret == 0)
-  {
-    ret = lsm6dso_read_reg(ctx, LSM6DSO_SLV3_CONFIG,
-                           (uint8_t *)&slv3_config, 1);
-  }
-
-  if (ret == 0)
-  {
-    slv3_config.slave3_numop = val->slv_len;
-    ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV3_CONFIG,
-                            (uint8_t *)&slv3_config, 1);
+    ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV0_CONFIG + idx*3, (uint8_t *)&slv0_config, 1);
   }
 
   if (ret == 0)
