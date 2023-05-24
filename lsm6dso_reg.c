@@ -10320,7 +10320,7 @@ int32_t lsm6dso_sh_slv3_cfg_read(stmdev_ctx_t *ctx,
   *
   * @param  ctx      read / write interface definitions
   * @param  val      union of registers from STATUS_MASTER to
-  * @retval             interface status (MANDATORY: return 0 -> no Error)
+  * @retval          interface status (MANDATORY: return 0 -> no Error)
   *
   */
 int32_t lsm6dso_sh_status_get(stmdev_ctx_t *ctx,
@@ -10328,17 +10328,7 @@ int32_t lsm6dso_sh_status_get(stmdev_ctx_t *ctx,
 {
   int32_t ret;
 
-  ret = lsm6dso_mem_bank_set(ctx, LSM6DSO_SENSOR_HUB_BANK);
-
-  if (ret == 0)
-  {
-    ret = lsm6dso_read_reg(ctx, LSM6DSO_STATUS_MASTER, (uint8_t *) val, 1);
-  }
-
-  if (ret == 0)
-  {
-    ret = lsm6dso_mem_bank_set(ctx, LSM6DSO_USER_BANK);
-  }
+  ret = lsm6dso_read_reg(ctx, LSM6DSO_STATUS_MASTER_MAINPAGE, (uint8_t *) val, 1);
 
   return ret;
 }
