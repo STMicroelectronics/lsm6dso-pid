@@ -2931,8 +2931,8 @@ int32_t lsm6dso_ln_pg_read_byte(stmdev_ctx_t *ctx, uint16_t address,
                                 uint8_t *val);
 int32_t lsm6dso_ln_pg_write(stmdev_ctx_t *ctx, uint16_t address,
                             uint8_t *buf, uint8_t len);
-int32_t lsm6dso_ln_pg_read(stmdev_ctx_t *ctx, uint16_t address,
-                           uint8_t *val);
+int32_t lsm6dso_ln_pg_read(stmdev_ctx_t *ctx, uint16_t address, uint8_t *buf,
+                           uint8_t len);
 
 typedef enum
 {
