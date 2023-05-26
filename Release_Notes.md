@@ -44,18 +44,32 @@ This directory contains the LSM6DSO component drivers.
 
 </div>
 
-<input type="checkbox" id="collapse-section1" checked aria-hidden="true">
-<label for="collapse-section1" aria-hidden="true">V2.0.0 / 19-April-2023</label>
+<input type="checkbox" id="collapse-section2" aria-hidden="true">
+<label for="collapse-section2" aria-hidden="true">V2.0.0 / 19-April-2023</label>
 <div>			
 
 ## Main changes
-
-### First release
 
 - Fixed wrong implementation of lsm6dso_interrupt_mode_get.
 - Fix typo in TAG enum, add missing TAG enum (timestamp) in getter
 - Fix mistakes in docs for setters and getters
 - Fixed most mcuastyle errors
+
+##
+
+</div>
+
+<input type="checkbox" id="collapse-section3" checked aria-hidden="true">
+<label for="collapse-section3" aria-hidden="true">V2.1.0 / 26-May-2023</label>
+<div>			
+
+## Main changes
+
+- review read/write reg ret value checks
+- Use a single lsm6dso_fifo_sh_batch_slave_xxx() API for all targets
+- Use a single lsm6dso_sh_slv_cfg_read() API for all targets
+- read sh status from mainpage
+- Change lsm6dso_mem_bank_set() API
 
 ##
 
