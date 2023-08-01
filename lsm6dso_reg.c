@@ -10446,13 +10446,13 @@ int32_t lsm6dso_mode_set(stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
 {
   lsm6dso_func_cfg_access_t func_cfg_access;
   lsm6dso_ctrl1_ois_t ctrl1_ois;
-  lsm6dso_ctrl2_ois_t ctrl2_ois;
+  lsm6dso_ctrl2_ois_t ctrl2_ois = {0};
   lsm6dso_ctrl3_ois_t ctrl3_ois;
   lsm6dso_ctrl1_xl_t ctrl1_xl;
   lsm6dso_ctrl8_xl_t ctrl8_xl;
   lsm6dso_ctrl2_g_t ctrl2_g;
-  lsm6dso_ctrl3_c_t ctrl3_c;
-  lsm6dso_ctrl4_c_t ctrl4_c;
+  lsm6dso_ctrl3_c_t ctrl3_c = {0};
+  lsm6dso_ctrl4_c_t ctrl4_c = {0};
   lsm6dso_ctrl5_c_t ctrl5_c;
   lsm6dso_ctrl6_c_t ctrl6_c;
   lsm6dso_ctrl7_g_t ctrl7_g;
