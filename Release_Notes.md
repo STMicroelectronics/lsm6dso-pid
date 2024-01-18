@@ -75,7 +75,7 @@ This directory contains the LSM6DSO component drivers.
 
 </div>
 
-<input type="checkbox" id="collapse-section4" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section4" aria-hidden="true">
 <label for="collapse-section4" aria-hidden="true">V2.2.0 / 09-Nov-2023</label>
 <div>			
 
@@ -87,6 +87,17 @@ This directory contains the LSM6DSO component drivers.
 
 </div>
 
+<input type="checkbox" id="collapse-section5" checked aria-hidden="true">
+<label for="collapse-section5" aria-hidden="true">V3.0.0 / 18-Jan-2024</label>
+<div>
+
+## Main changes
+
+- Add "const" to ctx arg for all APIs
+
+##
+
+</div>
 :::
 
 :::
