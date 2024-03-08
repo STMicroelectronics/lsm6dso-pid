@@ -9275,7 +9275,7 @@ int32_t lsm6dso_id_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
   * @param  ctx          communication interface handler.(ptr)
   * @param  val          re-initialization mode. Refer to datasheet
   *                      and application note for more information
-  *                      about differencies between boot and sw_reset
+  *                      about differences between boot and sw_reset
   *                      procedure.
   * @retval             interface status (MANDATORY: return 0 -> no Error)
   *
