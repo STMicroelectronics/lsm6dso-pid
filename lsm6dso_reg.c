@@ -10613,7 +10613,7 @@ int32_t lsm6dso_mode_set(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
   lsm6dso_ctrl2_g_t ctrl2_g;
   lsm6dso_ctrl3_c_t ctrl3_c = {0};
   lsm6dso_ctrl4_c_t ctrl4_c = {0};
-  lsm6dso_ctrl5_c_t ctrl5_c;
+  lsm6dso_ctrl5_c_t ctrl5_c = {0};
   lsm6dso_ctrl6_c_t ctrl6_c;
   lsm6dso_ctrl7_g_t ctrl7_g;
   uint8_t xl_hm_mode;
