@@ -30,30 +30,109 @@ This directory contains the LSM6DSO component drivers.
 # Update history
 
 ::: {.collapse}
-<input type="checkbox" id="collapse-section1" aria-hidden="true">
-<label for="collapse-section1" aria-hidden="true">V1.0.0 / 18-June-2021</label>
+<input type="checkbox" id="collapse-section12" checked aria-hidden="true">
+<label for="collapse-section12" aria-hidden="true">V3.2.1 / 07-Oct-2025</label>
 <div>
 
 ## Main changes
 
-### First release
+- Adding CODE_OF_CONDUCT.md and SECURITY.md
 
-- First official release [ref. DS v2.0]
+##
+
+</div>
+<input type="checkbox" id="collapse-section11" aria-hidden="true">
+<label for="collapse-section11" aria-hidden="true">V3.2.0 / 07-Jul-2025</label>
+<div>
+
+## Main changes
+
+- Fix driver formatting options
+- Added pointer to private data in stmdev_ctx_t
 
 ##
 
 </div>
 
-<input type="checkbox" id="collapse-section2" aria-hidden="true">
-<label for="collapse-section2" aria-hidden="true">V2.0.0 / 19-April-2023</label>
+<input type="checkbox" id="collapse-section10" aria-hidden="true">
+<label for="collapse-section10" aria-hidden="true">V3.1.2 / 26-Apr-2025</label>
 <div>
 
 ## Main changes
 
-- Fixed wrong implementation of lsm6dso_interrupt_mode_get.
-- Fix typo in TAG enum, add missing TAG enum (timestamp) in getter
-- Fix mistakes in docs for setters and getters
-- Fixed most mcuastyle errors
+- fix compilation warning
+
+##
+
+</div>
+
+<input type="checkbox" id="collapse-section9" aria-hidden="true">
+<label for="collapse-section9" aria-hidden="true">V3.1.1 / 07-Apr-2025</label>
+<div>
+
+## Main changes
+
+- Fixed MISRA C Errors
+
+##
+
+</div>
+
+<input type="checkbox" id="collapse-section8" aria-hidden="true">
+<label for="collapse-section8" aria-hidden="true">V3.1.0 / 18-Dec-2024</label>
+<div>
+
+## Main changes
+
+- Read always both FIFO_STATUS1 and FIFO_STATUS2 regs
+
+##
+
+</div>
+
+<input type="checkbox" id="collapse-section7" aria-hidden="true">
+<label for="collapse-section7" aria-hidden="true">V3.0.2 / 20-Jun-2024</label>
+<div>
+
+## Main changes
+
+- updated README.md file with tag reference and mdelay description
+
+##
+
+</div>
+
+<input type="checkbox" id="collapse-section6" aria-hidden="true">
+<label for="collapse-section6" aria-hidden="true">V3.0.1 / 11-Mar-2024</label>
+<div>
+
+## Main changes
+
+- fix typo error in reg.c
+
+##
+
+</div>
+
+<input type="checkbox" id="collapse-section5" aria-hidden="true">
+<label for="collapse-section5" aria-hidden="true">V3.0.0 / 18-Jan-2024</label>
+<div>
+
+## Main changes
+
+- Add "const" to ctx arg for all APIs
+
+##
+
+</div>
+
+<input type="checkbox" id="collapse-section4" aria-hidden="true">
+<label for="collapse-section4" aria-hidden="true">V2.2.0 / 09-Nov-2023</label>
+<div>
+
+## Main changes
+
+- Fix "maybe uninitialized variable" warnings
 
 ##
 
@@ -75,114 +154,35 @@ This directory contains the LSM6DSO component drivers.
 
 </div>
 
-<input type="checkbox" id="collapse-section4" aria-hidden="true">
-<label for="collapse-section4" aria-hidden="true">V2.2.0 / 09-Nov-2023</label>
+<input type="checkbox" id="collapse-section2" aria-hidden="true">
+<label for="collapse-section2" aria-hidden="true">V2.0.0 / 19-April-2023</label>
 <div>
 
 ## Main changes
 
-- Fix "maybe uninitialized variable" warnings
+- Fixed wrong implementation of lsm6dso_interrupt_mode_get.
+- Fix typo in TAG enum, add missing TAG enum (timestamp) in getter
+- Fix mistakes in docs for setters and getters
+- Fixed most mcuastyle errors
 
 ##
 
 </div>
 
-<input type="checkbox" id="collapse-section5" aria-hidden="true">
-<label for="collapse-section5" aria-hidden="true">V3.0.0 / 18-Jan-2024</label>
+<input type="checkbox" id="collapse-section1" aria-hidden="true">
+<label for="collapse-section1" aria-hidden="true">V1.0.0 / 18-June-2021</label>
 <div>
 
 ## Main changes
 
-- Add "const" to ctx arg for all APIs
+### First release
+
+- First official release [ref. DS v2.0]
 
 ##
 
 </div>
 
-<input type="checkbox" id="collapse-section6" aria-hidden="true">
-<label for="collapse-section6" aria-hidden="true">V3.0.1 / 11-Mar-2024</label>
-<div>
-
-## Main changes
-
-- fix typo error in reg.c
-
-##
-
-</div>
-
-<input type="checkbox" id="collapse-section7" aria-hidden="true">
-<label for="collapse-section7" aria-hidden="true">V3.0.2 / 20-Jun-2024</label>
-<div>
-
-## Main changes
-
-- updated README.md file with tag reference and mdelay description
-
-##
-
-</div>
-
-<input type="checkbox" id="collapse-section8" aria-hidden="true">
-<label for="collapse-section8" aria-hidden="true">V3.1.0 / 18-Dec-2024</label>
-<div>
-
-## Main changes
-
-- Read always both FIFO_STATUS1 and FIFO_STATUS2 regs
-
-##
-
-</div>
-
-<input type="checkbox" id="collapse-section9" aria-hidden="true">
-<label for="collapse-section9" aria-hidden="true">V3.1.1 / 07-Apr-2025</label>
-<div>
-
-## Main changes
-
-- Fixed MISRA C Errors
-
-##
-
-</div>
-
-<input type="checkbox" id="collapse-section10" aria-hidden="true">
-<label for="collapse-section10" aria-hidden="true">V3.1.2 / 26-Apr-2025</label>
-<div>
-
-## Main changes
-
-- fix compilation warning
-
-##
-
-</div>
-
-<input type="checkbox" id="collapse-section11" aria-hidden="true">
-<label for="collapse-section11" aria-hidden="true">V3.2.0 / 07-Jul-2025</label>
-<div>
-
-## Main changes
-
-- Fix driver formatting options
-- Added pointer to private data in stmdev_ctx_t
-
-##
-
-</div>
-
-<input type="checkbox" id="collapse-section12" checked aria-hidden="true">
-<label for="collapse-section12" aria-hidden="true">V3.2.1 / 07-Oct-2025</label>
-<div>
-
-## Main changes
-
-- Adding CODE_OF_CONDUCT.md and SECURITY.md
-
-##
-
-</div>
 :::
 
 
