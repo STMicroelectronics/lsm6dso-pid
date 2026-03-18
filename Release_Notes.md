@@ -30,7 +30,18 @@ This directory contains the LSM6DSO component drivers.
 # Update history
 
 ::: {.collapse}
-<input type="checkbox" id="collapse-section12" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section13" checked aria-hidden="true">
+<label for="collapse-section13" aria-hidden="true">V3.2.2 / 18-Mar-2026</label>
+<div>
+
+## Main changes
+
+- Re-order update history (most updated on top)
+
+##
+
+</div>
+<input type="checkbox" id="collapse-section12" aria-hidden="true">
 <label for="collapse-section12" aria-hidden="true">V3.2.1 / 07-Oct-2025</label>
 <div>
 
