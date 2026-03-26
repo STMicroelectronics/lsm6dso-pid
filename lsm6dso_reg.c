@@ -9298,7 +9298,7 @@ int32_t lsm6dso_sh_cfg_write(const stmdev_ctx_t *ctx,
     return ret;
   }
 
-  reg.slave0 = val->slv0_add;
+  reg.slave0 = (uint8_t)(val->slv0_add >> 1);
   reg.rw_0 = 0;
   ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV0_ADD, (uint8_t *)&reg, 1);
   if (ret != 0)
@@ -9345,7 +9345,7 @@ int32_t lsm6dso_sh_slv_cfg_read(const stmdev_ctx_t *ctx, uint8_t idx,
     return ret;
   }
 
-  slv0_add.slave0 = val->slv_add;
+  slv0_add.slave0 = (uint8_t)(val->slv_add >> 1);
   slv0_add.rw_0 = 1;
   ret = lsm6dso_write_reg(ctx, LSM6DSO_SLV0_ADD + (3U*idx), (uint8_t *)&slv0_add, 1);
   if (ret != 0)
