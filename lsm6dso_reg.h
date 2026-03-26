@@ -108,8 +108,18 @@ typedef struct
   *
   */
 
-typedef int32_t (*stmdev_write_ptr)(void *, uint8_t, const uint8_t *, uint16_t);
-typedef int32_t (*stmdev_read_ptr)(void *, uint8_t, uint8_t *, uint16_t);
+typedef int32_t (*stmdev_write_ptr)(
+  void *handle,
+  uint8_t reg,
+  const uint8_t *buf,
+  uint16_t len);
+
+typedef int32_t (*stmdev_read_ptr)(
+  void *handle,
+  uint8_t reg,
+  uint8_t *buf,
+  uint16_t len);
+
 typedef void (*stmdev_mdelay_ptr)(uint32_t millisec);
 
 typedef struct
@@ -292,7 +302,7 @@ typedef struct
   uint8_t cnt_bdr_th               : 8;
 } lsm6dso_counter_bdr_reg2_t;
 
-#define LSM6DSO_INT1_CTRL  0x0D
+#define LSM6DSO_INT1_CTRL                    0x0DU
 typedef struct
 {
 #if DRV_BYTE_ORDER == DRV_LITTLE_ENDIAN
@@ -1411,7 +1421,7 @@ typedef struct
   uint8_t fsm15_en                 : 1;
   uint8_t fsm16_en                 : 1;
 #elif DRV_BYTE_ORDER == DRV_BIG_ENDIAN
-  uint8_t fsm16_en                  : 1;
+  uint8_t fsm16_en                 : 1;
   uint8_t fsm15_en                 : 1;
   uint8_t fsm14_en                 : 1;
   uint8_t fsm13_en                 : 1;
@@ -2944,7 +2954,6 @@ int32_t lsm6dso_aux_pw_on_ctrl_set(const stmdev_ctx_t *ctx,
                                    lsm6dso_ois_on_t val);
 int32_t lsm6dso_aux_pw_on_ctrl_get(const stmdev_ctx_t *ctx,
                                    lsm6dso_ois_on_t *val);
-
 typedef enum
 {
   LSM6DSO_USE_SAME_XL_FS        = 0,
@@ -3153,18 +3162,8 @@ int32_t lsm6dso_i3c_disable_get(const stmdev_ctx_t *ctx,
 
 typedef enum
 {
-  LSM6DSO_PULL_DOWN_DISC       = 0,
-  LSM6DSO_PULL_DOWN_CONNECT    = 1,
-} lsm6dso_int1_pd_en_t;
-int32_t lsm6dso_int1_mode_set(const stmdev_ctx_t *ctx,
-                              lsm6dso_int1_pd_en_t val);
-int32_t lsm6dso_int1_mode_get(const stmdev_ctx_t *ctx,
-                              lsm6dso_int1_pd_en_t *val);
-
-typedef enum
-{
-  LSM6DSO_PUSH_PULL   = 0,
-  LSM6DSO_OPEN_DRAIN  = 1,
+  LSM6DSO_PUSH_PULL                         = 0x00,
+  LSM6DSO_OPEN_DRAIN                        = 0x01,
 } lsm6dso_pp_od_t;
 int32_t lsm6dso_pin_mode_set(const stmdev_ctx_t *ctx, lsm6dso_pp_od_t val);
 int32_t lsm6dso_pin_mode_get(const stmdev_ctx_t *ctx, lsm6dso_pp_od_t *val);
@@ -3593,10 +3592,10 @@ int32_t lsm6dso_motion_flag_data_ready_get(const stmdev_ctx_t *ctx,
 int32_t lsm6dso_tilt_flag_data_ready_get(const stmdev_ctx_t *ctx,
                                          uint8_t *val);
 
-int32_t lsm6dso_sh_mag_sensitivity_set(const stmdev_ctx_t *ctx,
-                                       uint16_t val);
-int32_t lsm6dso_sh_mag_sensitivity_get(const stmdev_ctx_t *ctx,
-                                       uint16_t *val);
+int32_t lsm6dso_mag_sensitivity_set(const stmdev_ctx_t *ctx,
+                                    uint16_t val);
+int32_t lsm6dso_mag_sensitivity_get(const stmdev_ctx_t *ctx,
+                                    uint16_t *val);
 
 int32_t lsm6dso_mag_offset_set(const stmdev_ctx_t *ctx, int16_t *val);
 int32_t lsm6dso_mag_offset_get(const stmdev_ctx_t *ctx, int16_t *val);
@@ -4007,7 +4006,6 @@ int32_t lsm6dso_pin_int2_route_get(const stmdev_ctx_t *ctx,
                                    stmdev_ctx_t *aux_ctx,
                                    lsm6dso_pin_int2_route_t *val);
 
-
 typedef struct
 {
   uint8_t drdy_xl          :  1; /* Accelerometer data ready */
@@ -4237,6 +4235,8 @@ typedef struct
 } lsm6dso_md_t;
 
 int32_t lsm6dso_mode_set(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
+                         lsm6dso_md_t *val);
+int32_t lsm6dso_mode_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
                          lsm6dso_md_t *val);
 
 typedef struct
