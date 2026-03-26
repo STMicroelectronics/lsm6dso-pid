@@ -2558,7 +2558,7 @@ typedef struct
 typedef struct
 {
   uint8_t slave0_dataw             : 8;
-} lsm6dso_datawrite_src_mode_sub_slv0_t;
+} lsm6dso_datawrite_tgt0_t;
 
 #define LSM6DSO_STATUS_MASTER                0x22U
 typedef struct
@@ -4115,8 +4115,8 @@ int32_t lsm6dso_all_sources_get(const stmdev_ctx_t *ctx,
 typedef struct
 {
   uint8_t odr_fine_tune;
-} dev_cal_t;
-int32_t lsm6dso_calibration_get(const stmdev_ctx_t *ctx, dev_cal_t *val);
+} lsm6dso_dev_cal_t;
+int32_t lsm6dso_calibration_get(const stmdev_ctx_t *ctx, lsm6dso_dev_cal_t *val);
 
 typedef enum
 {
@@ -4143,7 +4143,7 @@ typedef enum
   LSM6DSO_XL_UI_1667Hz_HP = 0x08, /* @1kHz66 (high performance) */
   LSM6DSO_XL_UI_3333Hz_HP = 0x09, /* @3kHz33 (high performance) */
   LSM6DSO_XL_UI_6667Hz_HP = 0x0A, /* @6kHz66 (high performance) */
-} lsm6dso_odr_xl_ui_t;
+} lsm6dso_ui_odr_xl_t;
 
 typedef enum
 {
@@ -4151,7 +4151,7 @@ typedef enum
   LSM6DSO_XL_UI_4g   = 2,
   LSM6DSO_XL_UI_8g   = 3,
   LSM6DSO_XL_UI_16g  = 1, /* OIS full scale is also forced to be 16g */
-} lsm6dso_fs_xl_ui_t;
+} lsm6dso_ui_fs_xl_t;
 
 typedef enum
 {
@@ -4171,7 +4171,7 @@ typedef enum
   LSM6DSO_GY_UI_1667Hz_HP = 0x08, /* gy @1kHz66 (high performance) */
   LSM6DSO_GY_UI_3333Hz_HP = 0x09, /* gy @3kHz33 (high performance) */
   LSM6DSO_GY_UI_6667Hz_HP = 0x0A, /* gy @6kHz66 (high performance) */
-} lsm6dso_odr_g_ui_t;
+} lsm6dso_ui_odr_g_t;
 
 typedef enum
 {
@@ -4180,19 +4180,19 @@ typedef enum
   LSM6DSO_GY_UI_500dps   = 2,
   LSM6DSO_GY_UI_1000dps  = 4,
   LSM6DSO_GY_UI_2000dps  = 6,
-} lsm6dso_fs_g_ui_t;
+} lsm6dso_ui_fs_g_t;
 
 typedef enum
 {
   LSM6DSO_OIS_ONLY_AUX    = 0x00, /* Auxiliary SPI full control */
   LSM6DSO_OIS_MIXED       = 0x01, /* Enabling by UI / read-config by AUX */
-} lsm6dso_ctrl_md_t;
+} lsm6dso_ois_ctrl_md_t;
 
 typedef enum
 {
   LSM6DSO_XL_OIS_OFF       = 0x00, /* in power down */
   LSM6DSO_XL_OIS_6667Hz_HP = 0x01, /* @6kHz OIS imu active/NO ULP on UI */
-} lsm6dso_odr_xl_ois_noaux_t;
+} lsm6dso_ois_xl_odr_t;
 
 typedef enum
 {
@@ -4200,13 +4200,13 @@ typedef enum
   LSM6DSO_XL_OIS_4g   = 2,
   LSM6DSO_XL_OIS_8g   = 3,
   LSM6DSO_XL_OIS_16g  = 1, /* UI full scale is also forced to be 16g */
-} lsm6dso_fs_xl_ois_noaux_t;
+} lsm6dso_ois_xl_fs_t;
 
 typedef enum
 {
   LSM6DSO_GY_OIS_OFF       = 0x00, /* in power down */
   LSM6DSO_GY_OIS_6667Hz_HP = 0x01, /* @6kHz No Ultra Low Power*/
-} lsm6dso_odr_g_ois_noaux_t;
+} lsm6dso_ois_gy_odr_t;
 
 typedef enum
 {
@@ -4215,7 +4215,7 @@ typedef enum
   LSM6DSO_GY_OIS_500dps   = 2,
   LSM6DSO_GY_OIS_1000dps  = 4,
   LSM6DSO_GY_OIS_2000dps  = 6,
-} lsm6dso_fs_g_ois_noaux_t;
+} lsm6dso_ois_gy_fs_t;
 
 typedef enum
 {
@@ -4239,27 +4239,27 @@ typedef struct
   {
     struct
     {
-      lsm6dso_odr_xl_ui_t odr;
-      lsm6dso_fs_xl_ui_t fs;
+      lsm6dso_ui_odr_xl_t odr;
+      lsm6dso_ui_fs_xl_t fs;
     } xl;
     struct
     {
-      lsm6dso_odr_g_ui_t odr;
-      lsm6dso_fs_g_ui_t fs;
+      lsm6dso_ui_odr_g_t odr;
+      lsm6dso_ui_fs_g_t fs;
     } gy;
   } ui;
   struct
   {
-    lsm6dso_ctrl_md_t ctrl_md;
+    lsm6dso_ois_ctrl_md_t ctrl_md;
     struct
     {
-      lsm6dso_odr_xl_ois_noaux_t odr;
-      lsm6dso_fs_xl_ois_noaux_t fs;
+      lsm6dso_ois_xl_odr_t odr;
+      lsm6dso_ois_xl_fs_t fs;
     } xl;
     struct
     {
-      lsm6dso_odr_g_ois_noaux_t odr;
-      lsm6dso_fs_g_ois_noaux_t fs;
+      lsm6dso_ois_gy_odr_t odr;
+      lsm6dso_ois_gy_fs_t fs;
     } gy;
   } ois;
   struct
@@ -4268,6 +4268,7 @@ typedef struct
     lsm6dso_odr_fsm_t odr;
   } fsm;
 } lsm6dso_md_t;
+
 int32_t lsm6dso_mode_set(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
                          lsm6dso_md_t *val);
 int32_t lsm6dso_mode_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
