@@ -29,6 +29,7 @@ extern "C" {
 #include <stdint.h>
 #include <stddef.h>
 #include <math.h>
+#include <string.h>
 
 /** @addtogroup LSM6DSO
   * @{
@@ -2736,13 +2737,13 @@ int32_t lsm6dso_gy_flag_data_ready_get(const stmdev_ctx_t *ctx,
 int32_t lsm6dso_temp_flag_data_ready_get(const stmdev_ctx_t *ctx,
                                          uint8_t *val);
 
-int32_t lsm6dso_xl_usr_offset_x_set(const stmdev_ctx_t *ctx, uint8_t *buff);
+int32_t lsm6dso_xl_usr_offset_x_set(const stmdev_ctx_t *ctx, const uint8_t *buff);
 int32_t lsm6dso_xl_usr_offset_x_get(const stmdev_ctx_t *ctx, uint8_t *buff);
 
-int32_t lsm6dso_xl_usr_offset_y_set(const stmdev_ctx_t *ctx, uint8_t *buff);
+int32_t lsm6dso_xl_usr_offset_y_set(const stmdev_ctx_t *ctx, const uint8_t *buff);
 int32_t lsm6dso_xl_usr_offset_y_get(const stmdev_ctx_t *ctx, uint8_t *buff);
 
-int32_t lsm6dso_xl_usr_offset_z_set(const stmdev_ctx_t *ctx, uint8_t *buff);
+int32_t lsm6dso_xl_usr_offset_z_set(const stmdev_ctx_t *ctx, const uint8_t *buff);
 int32_t lsm6dso_xl_usr_offset_z_get(const stmdev_ctx_t *ctx, uint8_t *buff);
 
 int32_t lsm6dso_xl_usr_offset_set(const stmdev_ctx_t *ctx, uint8_t val);
@@ -2796,12 +2797,12 @@ int32_t lsm6dso_mem_bank_get(const stmdev_ctx_t *ctx,
                              lsm6dso_reg_access_t *val);
 
 int32_t lsm6dso_ln_pg_write_byte(const stmdev_ctx_t *ctx, uint16_t address,
-                                 uint8_t *val);
+                                 const uint8_t *val);
 int32_t lsm6dso_ln_pg_read_byte(const stmdev_ctx_t *ctx, uint16_t address,
                                 uint8_t *val);
 
 int32_t lsm6dso_ln_pg_write(const stmdev_ctx_t *ctx, uint16_t address,
-                            uint8_t *buf, uint8_t len);
+                            const uint8_t *buf, uint8_t len);
 int32_t lsm6dso_ln_pg_read(const stmdev_ctx_t *ctx, uint16_t address, uint8_t *buf,
                            uint8_t len);
 
@@ -3597,10 +3598,10 @@ int32_t lsm6dso_mag_sensitivity_set(const stmdev_ctx_t *ctx,
 int32_t lsm6dso_mag_sensitivity_get(const stmdev_ctx_t *ctx,
                                     uint16_t *val);
 
-int32_t lsm6dso_mag_offset_set(const stmdev_ctx_t *ctx, int16_t *val);
+int32_t lsm6dso_mag_offset_set(const stmdev_ctx_t *ctx, const int16_t *val);
 int32_t lsm6dso_mag_offset_get(const stmdev_ctx_t *ctx, int16_t *val);
 
-int32_t lsm6dso_mag_soft_iron_set(const stmdev_ctx_t *ctx, int16_t *val);
+int32_t lsm6dso_mag_soft_iron_set(const stmdev_ctx_t *ctx, const int16_t *val);
 int32_t lsm6dso_mag_soft_iron_get(const stmdev_ctx_t *ctx, int16_t *val);
 
 typedef enum
@@ -3654,7 +3655,7 @@ typedef struct
   lsm6dso_fsm_enable_b_t          fsm_enable_b;
 } lsm6dso_emb_fsm_enable_t;
 int32_t lsm6dso_fsm_enable_set(const stmdev_ctx_t *ctx,
-                               lsm6dso_emb_fsm_enable_t *val);
+                               const lsm6dso_emb_fsm_enable_t *val);
 int32_t lsm6dso_fsm_enable_get(const stmdev_ctx_t *ctx,
                                lsm6dso_emb_fsm_enable_t *val);
 
@@ -3797,7 +3798,7 @@ typedef struct
   uint8_t   slv0_data;
 } lsm6dso_sh_cfg_write_t;
 int32_t lsm6dso_sh_cfg_write(const stmdev_ctx_t *ctx,
-                             lsm6dso_sh_cfg_write_t *val);
+                             const lsm6dso_sh_cfg_write_t *val);
 
 typedef struct
 {
@@ -3809,14 +3810,14 @@ int32_t lsm6dso_sh_slv_cfg_read(const stmdev_ctx_t *ctx, uint8_t idx,
                                 lsm6dso_sh_cfg_read_t *val);
 
 int32_t lsm6dso_sh_status_get(const stmdev_ctx_t *ctx,
-                              lsm6dso_status_master_t *val);
+                              const lsm6dso_status_master_t *val);
 
 typedef struct
 {
   uint8_t ui;
   uint8_t aux;
 } lsm6dso_id_t;
-int32_t lsm6dso_id_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
+int32_t lsm6dso_id_get(const stmdev_ctx_t *ctx, const stmdev_ctx_t *aux_ctx,
                        lsm6dso_id_t *val);
 
 typedef enum
@@ -3842,9 +3843,11 @@ typedef struct
   lsm6dso_ui_bus_md_t ui_bus_md;
   lsm6dso_aux_bus_md_t aux_bus_md;
 } lsm6dso_bus_mode_t;
-int32_t lsm6dso_bus_mode_set(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
+int32_t lsm6dso_bus_mode_set(const stmdev_ctx_t *ctx,
+                             const stmdev_ctx_t *aux_ctx,
                              lsm6dso_bus_mode_t val);
-int32_t lsm6dso_bus_mode_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
+int32_t lsm6dso_bus_mode_get(const stmdev_ctx_t *ctx,
+                             const stmdev_ctx_t *aux_ctx,
                              lsm6dso_bus_mode_t *val);
 
 typedef enum
@@ -3871,7 +3874,7 @@ typedef struct
   uint8_t ois_drdy_g         : 1; /* Gyroscope data ready on OIS */
   uint8_t ois_gyro_settling  : 1; /* Gyroscope is in the settling phase */
 } lsm6dso_status_t;
-int32_t lsm6dso_status_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
+int32_t lsm6dso_status_get(const stmdev_ctx_t *ctx, const stmdev_ctx_t *aux_ctx,
                            lsm6dso_status_t *val);
 
 typedef struct
@@ -3999,11 +4002,11 @@ typedef struct
 } lsm6dso_pin_int2_route_t;
 
 int32_t lsm6dso_pin_int2_route_set(const stmdev_ctx_t *ctx,
-                                   stmdev_ctx_t *aux_ctx,
+                                   const stmdev_ctx_t *aux_ctx,
                                    lsm6dso_pin_int2_route_t val);
 
 int32_t lsm6dso_pin_int2_route_get(const stmdev_ctx_t *ctx,
-                                   stmdev_ctx_t *aux_ctx,
+                                   const stmdev_ctx_t *aux_ctx,
                                    lsm6dso_pin_int2_route_t *val);
 
 typedef struct
@@ -4076,12 +4079,6 @@ typedef struct
 } lsm6dso_all_sources_t;
 int32_t lsm6dso_all_sources_get(const stmdev_ctx_t *ctx,
                                 lsm6dso_all_sources_t *val);
-
-typedef struct
-{
-  uint8_t odr_fine_tune;
-} lsm6dso_dev_cal_t;
-int32_t lsm6dso_calibration_get(const stmdev_ctx_t *ctx, lsm6dso_dev_cal_t *val);
 
 typedef enum
 {
@@ -4234,9 +4231,11 @@ typedef struct
   } fsm;
 } lsm6dso_md_t;
 
-int32_t lsm6dso_mode_set(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
+int32_t lsm6dso_mode_set(const stmdev_ctx_t *ctx,
+                         const stmdev_ctx_t *aux_ctx,
                          lsm6dso_md_t *val);
-int32_t lsm6dso_mode_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
+int32_t lsm6dso_mode_get(const stmdev_ctx_t *ctx,
+                         const stmdev_ctx_t *aux_ctx,
                          lsm6dso_md_t *val);
 
 typedef struct
@@ -4273,7 +4272,7 @@ typedef struct
     } gy;
   } ois;
 } lsm6dso_data_t;
-int32_t lsm6dso_data_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
+int32_t lsm6dso_data_get(const stmdev_ctx_t *ctx, const stmdev_ctx_t *aux_ctx,
                          const lsm6dso_md_t *md, lsm6dso_data_t *data);
 typedef struct
 {
@@ -4285,9 +4284,9 @@ typedef struct
   uint8_t fifo_compr   : 1; /* FIFO compression */
 } lsm6dso_emb_sens_t;
 int32_t lsm6dso_embedded_sens_set(const stmdev_ctx_t *ctx,
-                                  const lsm6dso_emb_sens_t *emb_sens);
+                                  const lsm6dso_emb_sens_t *val);
 int32_t lsm6dso_embedded_sens_get(const stmdev_ctx_t *ctx,
-                                  lsm6dso_emb_sens_t *emb_sens);
+                                  lsm6dso_emb_sens_t *val);
 int32_t lsm6dso_embedded_sens_off(const stmdev_ctx_t *ctx);
 
 /**

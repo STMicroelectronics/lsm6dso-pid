@@ -100,7 +100,7 @@ int32_t __weak lsm6dso_write_reg(const stmdev_ctx_t *ctx, uint8_t reg,
   *
   */
 
-static void bytecpy(uint8_t *target, uint8_t *source)
+static void bytecpy(uint8_t *target, const uint8_t *source)
 {
   if ((target != NULL) && (source != NULL))
   {
@@ -272,7 +272,7 @@ int32_t lsm6dso_xl_data_rate_set(const stmdev_ctx_t *ctx,
   lsm6dso_odr_xl_t odr_xl =  val;
   lsm6dso_emb_fsm_enable_t fsm_enable = {0};
   lsm6dso_emb_sens_t emb_sens = {0};
-  lsm6dso_fsm_odr_t fsm_odr = {0};
+  lsm6dso_fsm_odr_t fsm_odr = LSM6DSO_ODR_FSM_12Hz5;
   lsm6dso_ctrl1_xl_t reg = {0};
   int32_t ret = 0;
 
@@ -564,7 +564,7 @@ int32_t lsm6dso_gy_data_rate_set(const stmdev_ctx_t *ctx,
 {
   lsm6dso_odr_g_t odr_gy = val;
   lsm6dso_emb_fsm_enable_t fsm_enable = {0};
-  lsm6dso_fsm_odr_t fsm_odr = {0};
+  lsm6dso_fsm_odr_t fsm_odr = LSM6DSO_ODR_FSM_12Hz5;
   lsm6dso_ctrl2_g_t reg = {0};
   int32_t ret = 0;
 
@@ -1127,7 +1127,8 @@ int32_t lsm6dso_temp_flag_data_ready_get(const stmdev_ctx_t *ctx,
   * @retval             interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t lsm6dso_xl_usr_offset_x_set(const stmdev_ctx_t *ctx, uint8_t *buff)
+int32_t lsm6dso_xl_usr_offset_x_set(const stmdev_ctx_t *ctx,
+                                    const uint8_t *buff)
 {
   int32_t ret = 0;
 
@@ -1165,7 +1166,8 @@ int32_t lsm6dso_xl_usr_offset_x_get(const stmdev_ctx_t *ctx, uint8_t *buff)
   * @retval             interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t lsm6dso_xl_usr_offset_y_set(const stmdev_ctx_t *ctx, uint8_t *buff)
+int32_t lsm6dso_xl_usr_offset_y_set(const stmdev_ctx_t *ctx,
+                                    const uint8_t *buff)
 {
   int32_t ret = 0;
 
@@ -1203,7 +1205,8 @@ int32_t lsm6dso_xl_usr_offset_y_get(const stmdev_ctx_t *ctx, uint8_t *buff)
   * @retval             interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t lsm6dso_xl_usr_offset_z_set(const stmdev_ctx_t *ctx, uint8_t *buff)
+int32_t lsm6dso_xl_usr_offset_z_set(const stmdev_ctx_t *ctx,
+                                    const uint8_t *buff)
 {
   int32_t ret = 0;
 
@@ -1775,7 +1778,8 @@ int32_t lsm6dso_mem_bank_get(const stmdev_ctx_t *ctx,
   * @retval             interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t lsm6dso_ln_pg_write_byte(const stmdev_ctx_t *ctx, uint16_t address, uint8_t *val)
+int32_t lsm6dso_ln_pg_write_byte(const stmdev_ctx_t *ctx, uint16_t address,
+                                 const uint8_t *val)
 {
   return lsm6dso_ln_pg_write(ctx, address, val, 1);
 }
@@ -1791,7 +1795,7 @@ int32_t lsm6dso_ln_pg_write_byte(const stmdev_ctx_t *ctx, uint16_t address, uint
   *
   */
 int32_t lsm6dso_ln_pg_write(const stmdev_ctx_t *ctx, uint16_t address,
-                            uint8_t *buf, uint8_t len)
+                            const uint8_t *buf, uint8_t len)
 {
   lsm6dso_page_rw_t page_rw = {0};
   lsm6dso_page_sel_t page_sel = {0};
@@ -1843,7 +1847,7 @@ int32_t lsm6dso_ln_pg_write(const stmdev_ctx_t *ctx, uint16_t address,
   }
 
 
-  for (i = 0; ((i < len) && (ret == 0)); i++)
+  for (i = 0; i < len; i++)
   {
     ret = lsm6dso_write_reg(ctx, LSM6DSO_PAGE_VALUE, &buf[i], 1);
     if (ret != 0)
@@ -1854,7 +1858,7 @@ int32_t lsm6dso_ln_pg_write(const stmdev_ctx_t *ctx, uint16_t address,
     lsb++;
 
     /* Check if page wrap */
-    if (((lsb & 0xFFU) == 0x00U) && (ret == 0))
+    if ((lsb & 0xFFU) == 0x00U)
     {
       msb++;
       ret += lsm6dso_read_reg(ctx, LSM6DSO_PAGE_SEL, (uint8_t *)&page_sel, 1);
@@ -1949,7 +1953,7 @@ int32_t lsm6dso_ln_pg_read(const stmdev_ctx_t *ctx, uint16_t address, uint8_t *b
   page_sel.not_used_01 = 1; // Default value
   ret = lsm6dso_write_reg(ctx, LSM6DSO_PAGE_SEL, (uint8_t *) &page_sel, 1);
 
-  for (i = 0; ((i < len) && (ret == 0)); i++)
+  for (i = 0; i < len; i++)
   {
     /* set page addr */
     page_address.page_addr = lsb;
@@ -1969,7 +1973,7 @@ int32_t lsm6dso_ln_pg_read(const stmdev_ctx_t *ctx, uint16_t address, uint8_t *b
     lsb++;
 
     /* Check if page wrap */
-    if (((lsb & 0xFFU) == 0x00U) && (ret == 0))
+    if ((lsb & 0xFFU) == 0x00U)
     {
       msb++;
       ret = lsm6dso_read_reg(ctx, LSM6DSO_PAGE_SEL, (uint8_t *)&page_sel, 1);
@@ -5628,6 +5632,7 @@ int32_t lsm6dso_tap_axis_priority_get(const stmdev_ctx_t *ctx,
 
     case 0x07:
       *val = LSM6DSO_ZYX;
+      break;
 
     default:
       *val = LSM6DSO_XYZ;
@@ -7208,7 +7213,7 @@ int32_t lsm6dso_batch_counter_threshold_set(const stmdev_ctx_t *ctx,
   }
 
   counter_bdr_reg2.cnt_bdr_th =  0x00FFU & (uint8_t)val;
-  counter_bdr_reg1.cnt_bdr_th = (uint8_t)(0x0700U & val) >> 8;
+  counter_bdr_reg1.cnt_bdr_th = (uint8_t)((0x0700U & val) >> 8);
 
   ret += lsm6dso_write_reg(ctx, LSM6DSO_COUNTER_BDR_REG1, (uint8_t *)&counter_bdr_reg1, 1);
   ret += lsm6dso_write_reg(ctx, LSM6DSO_COUNTER_BDR_REG2, (uint8_t *)&counter_bdr_reg2, 1);
@@ -8407,7 +8412,7 @@ int32_t lsm6dso_mag_sensitivity_get(const stmdev_ctx_t *ctx, uint16_t *val)
   * @retval             interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t lsm6dso_mag_offset_set(const stmdev_ctx_t *ctx, int16_t *val)
+int32_t lsm6dso_mag_offset_set(const stmdev_ctx_t *ctx, const int16_t *val)
 {
   uint8_t buff[6] = {0};
 
@@ -8464,7 +8469,7 @@ int32_t lsm6dso_mag_offset_get(const stmdev_ctx_t *ctx, int16_t *val)
   * @retval             interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t lsm6dso_mag_soft_iron_set(const stmdev_ctx_t *ctx, int16_t *val)
+int32_t lsm6dso_mag_soft_iron_set(const stmdev_ctx_t *ctx, const int16_t *val)
 {
   uint8_t buff[12] = {0};
 
@@ -8838,7 +8843,7 @@ int32_t lsm6dso_long_cnt_flag_data_ready_get(const stmdev_ctx_t *ctx,
   *
   */
 int32_t lsm6dso_fsm_enable_set(const stmdev_ctx_t *ctx,
-                               lsm6dso_emb_fsm_enable_t *val)
+                               const lsm6dso_emb_fsm_enable_t *val)
 {
   int32_t ret = 0;
 
@@ -9995,7 +10000,7 @@ int32_t lsm6dso_sh_data_rate_get(const stmdev_ctx_t *ctx,
   *
   */
 int32_t lsm6dso_sh_cfg_write(const stmdev_ctx_t *ctx,
-                             lsm6dso_sh_cfg_write_t *val)
+                             const lsm6dso_sh_cfg_write_t *val)
 {
   lsm6dso_slv0_add_t reg = {0};
   int32_t ret = 0;
@@ -10089,7 +10094,7 @@ exit:
   *
   */
 int32_t lsm6dso_sh_status_get(const stmdev_ctx_t *ctx,
-                              lsm6dso_status_master_t *val)
+                              const lsm6dso_status_master_t *val)
 {
   int32_t ret = 0;
 
@@ -10123,7 +10128,7 @@ int32_t lsm6dso_sh_status_get(const stmdev_ctx_t *ctx,
   * @retval             interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t lsm6dso_id_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
+int32_t lsm6dso_id_get(const stmdev_ctx_t *ctx, const stmdev_ctx_t *aux_ctx,
                        lsm6dso_id_t *val)
 {
   int32_t ret = 0;
@@ -10225,7 +10230,8 @@ int32_t lsm6dso_init_set(const stmdev_ctx_t *ctx, lsm6dso_init_t val)
   * @retval             interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t lsm6dso_bus_mode_set(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
+int32_t lsm6dso_bus_mode_set(const stmdev_ctx_t *ctx,
+                             const stmdev_ctx_t *aux_ctx,
                              lsm6dso_bus_mode_t val)
 {
   lsm6dso_ctrl1_ois_t ctrl1_ois = {0};
@@ -10330,7 +10336,8 @@ int32_t lsm6dso_bus_mode_set(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
   * @retval             interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t lsm6dso_bus_mode_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
+int32_t lsm6dso_bus_mode_get(const stmdev_ctx_t *ctx,
+                             const stmdev_ctx_t *aux_ctx,
                              lsm6dso_bus_mode_t *val)
 {
   lsm6dso_ctrl1_ois_t ctrl1_ois = {0};
@@ -10393,9 +10400,9 @@ int32_t lsm6dso_bus_mode_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
     if (ret == 0)
     {
 
-      switch ((i3c_bus_avb.i3c_bus_avb_sel << 4) &
-              (ctrl9_xl.i3c_disable << 2) &
-              (ctrl4_c.i2c_disable << 1) & ctrl3_c.sim)
+      switch ((i3c_bus_avb.i3c_bus_avb_sel << 4) |
+              (ctrl9_xl.i3c_disable << 2) |
+              (ctrl4_c.i2c_disable << 1) | ctrl3_c.sim)
       {
         case 0x00:
           val->ui_bus_md = LSM6DSO_SEL_BY_HW;
@@ -10450,7 +10457,8 @@ int32_t lsm6dso_bus_mode_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
   * @retval             interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t lsm6dso_status_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
+int32_t lsm6dso_status_get(const stmdev_ctx_t *ctx,
+                           const stmdev_ctx_t *aux_ctx,
                            lsm6dso_status_t *val)
 {
   lsm6dso_status_spiaux_t       status_spiaux = {0};
@@ -10531,12 +10539,8 @@ int32_t lsm6dso_pin_conf_set(const stmdev_ctx_t *ctx,
   ctrl3_c.pp_od = ~val.int1_int2_push_pull;
   i3c_bus_avb.pd_dis_int1 = ~val.int1_pull_down;
 
-  if (ret != 0)
-  {
-    return ret;
-  }
   ret = lsm6dso_write_reg(ctx, LSM6DSO_PIN_CTRL, (uint8_t *)&pin_ctrl, 1);
-  ret = lsm6dso_write_reg(ctx, LSM6DSO_CTRL3_C, (uint8_t *)&ctrl3_c, 1);
+  ret += lsm6dso_write_reg(ctx, LSM6DSO_CTRL3_C, (uint8_t *)&ctrl3_c, 1);
 
   if (ret != 0)
   {
@@ -11005,7 +11009,7 @@ int32_t lsm6dso_pin_int1_route_get(const stmdev_ctx_t *ctx,
   *
   */
 int32_t lsm6dso_pin_int2_route_set(const stmdev_ctx_t *ctx,
-                                   stmdev_ctx_t *aux_ctx,
+                                   const stmdev_ctx_t *aux_ctx,
                                    lsm6dso_pin_int2_route_t val)
 {
   lsm6dso_pin_int1_route_t pin_int1_route = {0};
@@ -11206,7 +11210,7 @@ int32_t lsm6dso_pin_int2_route_set(const stmdev_ctx_t *ctx,
   *
   */
 int32_t lsm6dso_pin_int2_route_get(const stmdev_ctx_t *ctx,
-                                   stmdev_ctx_t *aux_ctx,
+                                   const stmdev_ctx_t *aux_ctx,
                                    lsm6dso_pin_int2_route_t *val)
 {
   lsm6dso_emb_func_int2_t  emb_func_int2 = {0};
@@ -11232,22 +11236,19 @@ int32_t lsm6dso_pin_int2_route_get(const stmdev_ctx_t *ctx,
 
   if (ctx != NULL)
   {
+    ret = lsm6dso_mem_bank_set(ctx, LSM6DSO_EMBEDDED_FUNC_BANK);
+
     if (ret == 0)
     {
-      ret = lsm6dso_mem_bank_set(ctx, LSM6DSO_EMBEDDED_FUNC_BANK);
-
-      if (ret == 0)
-      {
-        ret = lsm6dso_read_reg(ctx, LSM6DSO_EMB_FUNC_INT2,
-                               (uint8_t *)&emb_func_int2, 1);
-        ret += lsm6dso_read_reg(ctx, LSM6DSO_FSM_INT2_A,
-                                (uint8_t *)&fsm_int2_a, 1);
-        ret += lsm6dso_read_reg(ctx, LSM6DSO_FSM_INT2_B,
-                                (uint8_t *)&fsm_int2_b, 1);
-      }
-
-      ret = lsm6dso_mem_bank_set(ctx, LSM6DSO_USER_BANK);
+      ret = lsm6dso_read_reg(ctx, LSM6DSO_EMB_FUNC_INT2,
+                             (uint8_t *)&emb_func_int2, 1);
+      ret += lsm6dso_read_reg(ctx, LSM6DSO_FSM_INT2_A,
+                              (uint8_t *)&fsm_int2_a, 1);
+      ret += lsm6dso_read_reg(ctx, LSM6DSO_FSM_INT2_B,
+                              (uint8_t *)&fsm_int2_b, 1);
     }
+
+    ret += lsm6dso_mem_bank_set(ctx, LSM6DSO_USER_BANK);
 
     if (ret == 0)
     {
@@ -11458,7 +11459,7 @@ int32_t lsm6dso_all_sources_get(const stmdev_ctx_t *ctx,
   * @retval             interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t lsm6dso_mode_set(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
+int32_t lsm6dso_mode_set(const stmdev_ctx_t *ctx, const stmdev_ctx_t *aux_ctx,
                          lsm6dso_md_t *val)
 {
   lsm6dso_func_cfg_access_t func_cfg_access = {0};
@@ -11573,7 +11574,7 @@ int32_t lsm6dso_mode_set(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
   {
     switch (val->fsm.odr)
     {
-      case LSM6DSO_ODR_FSM_12Hz5:
+      case LSM6DSO_FSM_12Hz5:
         if ((val->fsm.sens != LSM6DSO_FSM_GY) && (odr_xl == 0x00U))
         {
           odr_xl = 0x01U;
@@ -11587,7 +11588,7 @@ int32_t lsm6dso_mode_set(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
 
         break;
 
-      case LSM6DSO_ODR_FSM_26Hz:
+      case LSM6DSO_FSM_26Hz:
         if ((val->fsm.sens != LSM6DSO_FSM_GY) && (odr_xl < 0x02U))
         {
           odr_xl = 0x02U;
@@ -11601,7 +11602,7 @@ int32_t lsm6dso_mode_set(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
 
         break;
 
-      case LSM6DSO_ODR_FSM_52Hz:
+      case LSM6DSO_FSM_52Hz:
         if ((val->fsm.sens != LSM6DSO_FSM_GY) && (odr_xl < 0x03U))
         {
           odr_xl = 0x03U;
@@ -11615,7 +11616,7 @@ int32_t lsm6dso_mode_set(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
 
         break;
 
-      case LSM6DSO_ODR_FSM_104Hz:
+      case LSM6DSO_FSM_104Hz:
         if ((val->fsm.sens != LSM6DSO_FSM_GY) && (odr_xl < 0x04U))
         {
           odr_xl = 0x04U;
@@ -11914,7 +11915,7 @@ int32_t lsm6dso_mode_set(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
   * @retval             interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t lsm6dso_mode_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
+int32_t lsm6dso_mode_get(const stmdev_ctx_t *ctx, const stmdev_ctx_t *aux_ctx,
                          lsm6dso_md_t *val)
 {
   lsm6dso_emb_func_odr_cfg_b_t emb_func_odr_cfg_b = {0};
@@ -12465,11 +12466,7 @@ int32_t lsm6dso_mode_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
       break;
 
     default:
-      val->ois.gy.fs = LSM6DSO_GY_OIS_250dps;
-      val->ois.gy.odr = LSM6DSO_GY_OIS_OFF;
-      val->ois.xl.odr = LSM6DSO_XL_OIS_OFF;
-      val->ois.xl.fs = LSM6DSO_XL_OIS_2g;
-      val->ois.ctrl_md = LSM6DSO_OIS_ONLY_AUX;
+      (void)memset(val, 0, sizeof(lsm6dso_md_t));
       break;
   }
 
@@ -12484,7 +12481,7 @@ int32_t lsm6dso_mode_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
   * @retval             interface status (MANDATORY: return 0 -> no Error)
   *
   */
-int32_t lsm6dso_data_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
+int32_t lsm6dso_data_get(const stmdev_ctx_t *ctx, const stmdev_ctx_t *aux_ctx,
                          const lsm6dso_md_t *md, lsm6dso_data_t *data)
 {
   uint8_t buff[14] = {0};
@@ -12600,23 +12597,23 @@ int32_t lsm6dso_data_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
 
     switch (md->ois.gy.fs)
     {
-      case LSM6DSO_GY_UI_250dps:
+      case LSM6DSO_GY_OIS_250dps:
         data->ois.gy.mdps[i] = lsm6dso_from_fs250_to_mdps(data->ois.gy.raw[i]);
         break;
 
-      case LSM6DSO_GY_UI_125dps:
+      case LSM6DSO_GY_OIS_125dps:
         data->ois.gy.mdps[i] = lsm6dso_from_fs125_to_mdps(data->ois.gy.raw[i]);
         break;
 
-      case LSM6DSO_GY_UI_500dps:
+      case LSM6DSO_GY_OIS_500dps:
         data->ois.gy.mdps[i] = lsm6dso_from_fs500_to_mdps(data->ois.gy.raw[i]);
         break;
 
-      case LSM6DSO_GY_UI_1000dps:
+      case LSM6DSO_GY_OIS_1000dps:
         data->ois.gy.mdps[i] = lsm6dso_from_fs1000_to_mdps(data->ois.gy.raw[i]);
         break;
 
-      case LSM6DSO_GY_UI_2000dps:
+      case LSM6DSO_GY_OIS_2000dps:
         data->ois.gy.mdps[i] = lsm6dso_from_fs2000_to_mdps(data->ois.gy.raw[i]);
         break;
 
@@ -12635,19 +12632,19 @@ int32_t lsm6dso_data_get(const stmdev_ctx_t *ctx, stmdev_ctx_t *aux_ctx,
 
     switch (md->ois.xl.fs)
     {
-      case LSM6DSO_XL_UI_2g:
+      case LSM6DSO_XL_OIS_2g:
         data->ois.xl.mg[i] = lsm6dso_from_fs2_to_mg(data->ois.xl.raw[i]);
         break;
 
-      case LSM6DSO_XL_UI_4g:
+      case LSM6DSO_XL_OIS_4g:
         data->ois.xl.mg[i] = lsm6dso_from_fs4_to_mg(data->ois.xl.raw[i]);
         break;
 
-      case LSM6DSO_XL_UI_8g:
+      case LSM6DSO_XL_OIS_8g:
         data->ois.xl.mg[i] = lsm6dso_from_fs8_to_mg(data->ois.xl.raw[i]);
         break;
 
-      case LSM6DSO_XL_UI_16g:
+      case LSM6DSO_XL_OIS_16g:
         data->ois.xl.mg[i] = lsm6dso_from_fs16_to_mg(data->ois.xl.raw[i]);
         break;
 
@@ -12712,7 +12709,7 @@ int32_t lsm6dso_embedded_sens_set(const stmdev_ctx_t *ctx,
   *
   */
 int32_t lsm6dso_embedded_sens_get(const stmdev_ctx_t *ctx,
-                                  lsm6dso_emb_sens_t *emb_sens)
+                                  lsm6dso_emb_sens_t *val)
 {
   lsm6dso_emb_func_en_a_t emb_func_en_a = {0};
   lsm6dso_emb_func_en_b_t emb_func_en_b = {0};
@@ -12728,12 +12725,12 @@ int32_t lsm6dso_embedded_sens_get(const stmdev_ctx_t *ctx,
 
   if (ret == 0)
   {
-    emb_sens->fsm = emb_func_en_b.fsm_en;
-    emb_sens->tilt = emb_func_en_a.tilt_en;
-    emb_sens->step = emb_func_en_a.pedo_en;
-    emb_sens->step_adv = emb_func_en_b.pedo_adv_en;
-    emb_sens->sig_mot = emb_func_en_a.sign_motion_en;
-    emb_sens->fifo_compr = emb_func_en_b.fifo_compr_en;
+    val->fsm = emb_func_en_b.fsm_en;
+    val->tilt = emb_func_en_a.tilt_en;
+    val->step = emb_func_en_a.pedo_en;
+    val->step_adv = emb_func_en_b.pedo_adv_en;
+    val->sig_mot = emb_func_en_a.sign_motion_en;
+    val->fifo_compr = emb_func_en_b.fifo_compr_en;
   }
 
   ret += lsm6dso_mem_bank_set(ctx, LSM6DSO_USER_BANK);
