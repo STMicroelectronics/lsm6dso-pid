@@ -3655,7 +3655,7 @@ typedef struct
   lsm6dso_fsm_enable_b_t          fsm_enable_b;
 } lsm6dso_emb_fsm_enable_t;
 int32_t lsm6dso_fsm_enable_set(const stmdev_ctx_t *ctx,
-                               const lsm6dso_emb_fsm_enable_t *val);
+                               lsm6dso_emb_fsm_enable_t *val);
 int32_t lsm6dso_fsm_enable_get(const stmdev_ctx_t *ctx,
                                lsm6dso_emb_fsm_enable_t *val);
 
@@ -3810,7 +3810,7 @@ int32_t lsm6dso_sh_slv_cfg_read(const stmdev_ctx_t *ctx, uint8_t idx,
                                 lsm6dso_sh_cfg_read_t *val);
 
 int32_t lsm6dso_sh_status_get(const stmdev_ctx_t *ctx,
-                              const lsm6dso_status_master_t *val);
+                              lsm6dso_status_master_t *val);
 
 typedef struct
 {
