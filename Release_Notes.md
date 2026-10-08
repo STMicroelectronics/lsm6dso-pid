@@ -30,7 +30,30 @@ This directory contains the LSM6DSO component drivers.
 # Update history
 
 ::: {.collapse}
-<input type="checkbox" id="collapse-section13" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section14" checked aria-hidden="true">
+<label for="collapse-section14" aria-hidden="true">V3.3.0 / 08-Oct-2026</label>
+<div>
+
+## Main changes
+
+- Fix temperature_raw_get() API
+- Fix xl/gy data_rate_Set API
+- Fix build warnings
+- Fix MISRA issues
+- Fix some MISRA issues
+- Change switch to use hex values
+- Refactor: fix style, add checks to return if some operation fails
+- Add sign specification to define in header
+- Rename some structs related to lsm6dso_md_t, add prefix to dev_cal_t
+- Move read/write_reg API definition in the header
+- Add bit shift in sh_cfg_read/write APIs
+- Refactor: ln_pg_read/write aligned to other drivers implementation
+
+##
+
+</div>
+
+<input type="checkbox" id="collapse-section13" aria-hidden="true">
 <label for="collapse-section13" aria-hidden="true">V3.2.2 / 18-Mar-2026</label>
 <div>
 
